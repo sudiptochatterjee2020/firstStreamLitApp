@@ -7,4 +7,4 @@ st.text("\N{pot of food} Idli + Sambhar Chutney");
 st.text("\N{stuffed flatbread} Poha mixed not fried!");
 st.text("\N{bread} \N{leafy green} \N{egg} Roti and Subzi and Boiled egg");
 st.text("\N{hot beverage} Healthy wali Chai");
-st.header("\N{grapes} \N{watermelon} \N{banana} Apna Sherbet khud banao - DYI Smoothie \N{mango} \N{pineapple} \N{red apple}");
+st.header("\N{grapes} \N{watermelon} \N{banana} DYI Smoothie \N{mango} \N{pineapple} \N{red apple}");
