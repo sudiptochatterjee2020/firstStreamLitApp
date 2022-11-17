@@ -22,5 +22,8 @@ fruits_selected = st.multiselect("Pick some fruits:", list(my_fruit_list.index),
 st.dataframe(my_fruit_list.loc[fruits_selected]); 
 
 st.header("Fruityvice Fruit Advice!");
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon");
-st.text(fruityvice_response.json());
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi");
+# format the response json into a pandas dataframe
+fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
+# and display the pandas dataframe using streamlit  
+st.dataframe(fruityvice_normalized)
