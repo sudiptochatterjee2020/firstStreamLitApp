@@ -1,3 +1,5 @@
+import requests;
+
 import streamlit as st;
 import pandas as pd;
 
@@ -18,3 +20,6 @@ my_fruit_list = my_fruit_list.set_index('Fruit');
 fruits_selected = st.multiselect("Pick some fruits:", list(my_fruit_list.index), ["Avocado", "Banana", "Kiwifruit"]);
 # filter the pandas dataframe and only display to the user the selected fruits 
 st.dataframe(my_fruit_list.loc[fruits_selected]); 
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+st.text(fruityvice_response)
