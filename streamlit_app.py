@@ -3,6 +3,8 @@ import requests;
 import streamlit as st;
 import pandas as pd;
 
+import snowflake.connector as ct;
+
 st.title("Mel and Igor's very healthy diner!");
 
 st.header("\N{flexed biceps} Breakfast Menu - Champs Only \N{flexed biceps}");
