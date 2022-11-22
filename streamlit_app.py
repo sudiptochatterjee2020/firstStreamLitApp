@@ -3,7 +3,7 @@ import requests;
 import streamlit as st;
 import pandas as pd;
 
-st.title("Mel and Igor's new healthy diner!");
+st.title("Mel and Igor's very healthy diner!");
 
 st.header("\N{flexed biceps} Breakfast Menu - Champs Only \N{flexed biceps}");
 st.text("\N{pot of food} Idli + Sambhar Chutney");
