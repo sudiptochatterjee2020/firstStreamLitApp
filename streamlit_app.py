@@ -3,7 +3,7 @@ import requests;
 import streamlit as st;
 import pandas as pd;
 
-import snowflake.connector as ct;
+import snowflake.connector as cnx;
 
 st.title("Mel and Igor's very healthy diner!");
 
@@ -24,10 +24,17 @@ fruits_selected = st.multiselect("Pick some fruits:", list(my_fruit_list.index),
 st.dataframe(my_fruit_list.loc[fruits_selected]); 
 
 st.header("Fruityvice Fruit Advice!");
-fruit_choice = st.text_input('What fruit would you like information about?','Kiwi')
-st.write('The user entered ', fruit_choice)
+fruit_choice = st.text_input('What fruit would you like information about?','Kiwi');
+st.write('The user entered ', fruit_choice);
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice);
 # format the response json into a pandas dataframe
-fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
+fruityvice_normalized = pd.json_normalize(fruityvice_response.json());
 # and display the pandas dataframe using streamlit  
-st.dataframe(fruityvice_normalized)
+st.dataframe(fruityvice_normalized);
+
+my_cnx = cnx.connect(**streamlit.secrets["snowflake"])
+my_cur = my_cnx.cursor()
+my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+my_data_row = my_cur.fetchone()
+streamlit.text("Hello from Snowflake:")
+streamlit.text(my_data_row)
