@@ -39,6 +39,10 @@ def get_fruit_list(my_cnx):
         my_cur.execute("select * from fruit_load_list");
         return my_cur.fetchall();
 
+def insert_fruit(my_cnx, new_fruit):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("insert into fruit_load_list values (new_fruit)");
+
 st.header("Fruityvice Fruit Advice!");
 fruit_choice = st.text_input('What fruit would you like information about?');
 if not fruit_choice:
@@ -51,8 +55,8 @@ if st.button("Check out our fresh fruit list"):
     fruit_data = get_fruit_list(my_cnx);
     st.dataframe(fruit_data);
 
-
-fruit_choice2 = st.text_input('What fruit would you like to add?');
-st.write('Thanks for adding ', fruit_choice2);
-
-my_cur.execute("insert into fruit_load_list values ('from streamlit')");
+add_my_fruit = st.text_input('What fruit would you like to add?');
+if st.button("Add a fruit to the list"):
+    my_cnx = cnx.connect(**st.secrets["snowflake"]);
+    insert_fruit(my_cnx, add_my_fruit);
+    st.write('Thanks for adding ', add_my_fruit);
