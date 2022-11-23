@@ -1,4 +1,5 @@
 import requests;
+from urllib.error import URLError;
 
 import streamlit as st;
 import pandas as pd;
@@ -24,13 +25,18 @@ fruits_selected = st.multiselect("Pick some fruits:", list(my_fruit_list.index),
 st.dataframe(my_fruit_list.loc[fruits_selected]); 
 
 st.header("Fruityvice Fruit Advice!");
-fruit_choice = st.text_input('What fruit would you like information about?','Kiwi');
-st.write('The user entered ', fruit_choice);
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice);
-# format the response json into a pandas dataframe
-fruityvice_normalized = pd.json_normalize(fruityvice_response.json());
-# and display the pandas dataframe using streamlit  
-st.dataframe(fruityvice_normalized);
+fruit_choice = st.text_input('What fruit would you like information about?');
+if not fruit_choice:
+    st.error("Please select a fruit to get information.")
+else:
+    try:
+        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice);
+        # format the response json into a pandas dataframe
+        fruityvice_normalized = pd.json_normalize(fruityvice_response.json());
+        # and display the pandas dataframe using streamlit  
+        st.dataframe(fruityvice_normalized);
+    except URLError as e:
+        st.error();
 
 my_cnx = cnx.connect(**st.secrets["snowflake"]);
 my_cur = my_cnx.cursor();
