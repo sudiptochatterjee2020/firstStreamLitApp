@@ -41,7 +41,7 @@ def get_fruit_list(my_cnx):
 
 def insert_fruit(my_cnx, new_fruit):
     with my_cnx.cursor() as my_cur:
-        my_cur.execute("insert into fruit_load_list values (new_fruit)");
+        my_cur.execute("insert into fruit_load_list values ('" + new_fruit + "')");
 
 st.header("Fruityvice Fruit Advice!");
 fruit_choice = st.text_input('What fruit would you like information about?');
