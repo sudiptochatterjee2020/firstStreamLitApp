@@ -34,19 +34,23 @@ def fruityvice_advice(fruit_of_choice):
     except URLError as e:
         st.error();
 
+def get_fruit_list(my_cnx):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("select * from fruit_load_list");
+        return my_cur.fetchall();
+
 st.header("Fruityvice Fruit Advice!");
 fruit_choice = st.text_input('What fruit would you like information about?');
 if not fruit_choice:
-    st.error("Please select a fruit to get information.")
+    st.error("Please select a fruit to get information.");
 else:
     fruityvice_advice(fruit_choice);
 
-my_cnx = cnx.connect(**st.secrets["snowflake"]);
-my_cur = my_cnx.cursor();
-my_cur.execute("select * from fruit_load_list");
-my_data_row = my_cur.fetchall();
-st.header("The fruit load list contains");
-st.dataframe(my_data_row);
+if st.button("Check out our fresh fruit list"):
+    my_cnx = cnx.connect(**st.secrets["snowflake"]);
+    fruit_data = get_fruit_list(my_cnx);
+    st.dataframe(fruit_data);
+
 
 fruit_choice2 = st.text_input('What fruit would you like to add?');
 st.write('Thanks for adding ', fruit_choice2);
